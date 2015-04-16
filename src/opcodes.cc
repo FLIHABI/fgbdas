@@ -16,7 +16,7 @@ static long long read_long(std::istream& is)
   long long value = 0;
 
   for (int i = 0; i < 8; ++i)
-    value = (value << 8) | buff[i];
+    value |= (buff[i] << (8 * i));
 
   return value;
 }
@@ -31,7 +31,7 @@ static short read_short(std::istream& is)
   short value = 0;
 
   for (int i = 0; i < 2; ++i)
-    value = (value << 2) | buff[i];
+    value |= (buff[i] << (8 * i));
 
   return value;
 }
