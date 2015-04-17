@@ -36,6 +36,16 @@ static short read_short(std::istream& is)
   return value;
 }
 
+static unsigned read_byte(std::istream& is)
+{
+  unsigned char c;
+
+  if (!(is >> c))
+    throw std::invalid_argument("Cannot read value, expected a 1 byte operand");
+
+  return c;
+}
+
 static void halt_disass(std::istream& is, std::ostream& os)
 {
   os << "halt";
@@ -108,12 +118,67 @@ static void not_disass(std::istream& is, std::ostream& os)
 
 static void shr_disass(std::istream& is, std::ostream& os)
 {
-  os << "shr";
+  os << "shr " << read_byte(is);
 }
 
 static void shl_disass(std::istream& is, std::ostream& os)
 {
-  os << "shl";
+  os << "shl " << read_byte(is);
+}
+
+static void cmp_disass(std::istream& is, std::ostream& os)
+{
+  os << "cmp";
+}
+
+static void call_disass(std::istream& is, std::ostream& os)
+{
+  os << "call " << read_short(is);
+}
+
+static void callr_disass(std::istream& is, std::ostream& os)
+{
+  os << "callr " << read_short(is);
+}
+
+static void ret_disass(std::istream& is, std::ostream& os)
+{
+  os << "ret";
+}
+
+static void jmp_disass(std::istream& is, std::ostream& os)
+{
+  os << "jmp " << read_short(is);
+}
+
+static void je_disass(std::istream& is, std::ostream& os)
+{
+  os << "je " << read_short(is);
+}
+
+static void jl_disass(std::istream& is, std::ostream& os)
+{
+  os << "jl " << read_short(is);
+}
+
+static void jg_disass(std::istream& is, std::ostream& os)
+{
+  os << "jg " << read_short(is);
+}
+
+static void jne_disass(std::istream& is, std::ostream& os)
+{
+  os << "jne " << read_short(is);
+}
+
+static void jle_disass(std::istream& is, std::ostream& os)
+{
+  os << "jle " << read_short(is);
+}
+
+static void jge_disass(std::istream& is, std::ostream& os)
+{
+  os << "jge " << read_short(is);
 }
 
 static std::unordered_map<unsigned char, opcode_handler_type>& get_handlers()
@@ -136,6 +201,17 @@ static std::unordered_map<unsigned char, opcode_handler_type>& get_handlers()
     {OP_NOT, not_disass},
     {OP_SHR, shr_disass},
     {OP_SHL, shl_disass},
+    {OP_CMP, cmp_disass},
+    {OP_CALL, call_disass},
+    {OP_CALLR, callr_disass},
+    {OP_RET, ret_disass},
+    {OP_JMP, jmp_disass},
+    {OP_JE, je_disass},
+    {OP_JL, jl_disass},
+    {OP_JG, jg_disass},
+    {OP_JNE, jne_disass},
+    {OP_JLE, jle_disass},
+    {OP_JGE, jge_disass},
   };
 
   return handlers;
