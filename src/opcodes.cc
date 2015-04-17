@@ -181,6 +181,16 @@ static void jge_disass(std::istream& is, std::ostream& os)
   os << "jge " << read_short(is);
 }
 
+static void create_disass(std::istream& is, std::ostream& os)
+{
+  os << "create " << read_short(is);
+}
+
+static void delete_disass(std::istream& is, std::ostream& os)
+{
+  os << "delete";
+}
+
 static std::unordered_map<unsigned char, opcode_handler_type>& get_handlers()
 {
   static std::unordered_map<unsigned char, opcode_handler_type> handlers =
@@ -212,6 +222,8 @@ static std::unordered_map<unsigned char, opcode_handler_type>& get_handlers()
     {OP_JNE, jne_disass},
     {OP_JLE, jle_disass},
     {OP_JGE, jge_disass},
+    {OP_CREATE, create_disass},
+    {OP_DELETE, delete_disass}
   };
 
   return handlers;
