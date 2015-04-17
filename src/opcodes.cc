@@ -61,6 +61,61 @@ static void popr_disass(std::istream& is, std::ostream& os)
   os << "popr " << read_short(is);
 }
 
+static void add_disass(std::istream& is, std::ostream& os)
+{
+  os << "add";
+}
+
+static void sub_disass(std::istream& is, std::ostream& os)
+{
+  os << "sub";
+}
+
+static void mul_disass(std::istream& is, std::ostream& os)
+{
+  os << "mul";
+}
+
+static void div_disass(std::istream& is, std::ostream& os)
+{
+  os << "div";
+}
+
+static void mod_disass(std::istream& is, std::ostream& os)
+{
+  os << "mod";
+}
+
+static void and_disass(std::istream& is, std::ostream& os)
+{
+  os << "and";
+}
+
+static void or_disass(std::istream& is, std::ostream& os)
+{
+  os << "or";
+}
+
+static void xor_disass(std::istream& is, std::ostream& os)
+{
+  os << "xor";
+}
+
+static void not_disass(std::istream& is, std::ostream& os)
+{
+  os << "not";
+}
+
+static void shr_disass(std::istream& is, std::ostream& os)
+{
+  os << "shr";
+}
+
+static void shl_disass(std::istream& is, std::ostream& os)
+{
+  os << "shl";
+}
+
 static std::unordered_map<unsigned char, opcode_handler_type>& get_handlers()
 {
   static std::unordered_map<unsigned char, opcode_handler_type> handlers =
@@ -70,6 +125,17 @@ static std::unordered_map<unsigned char, opcode_handler_type>& get_handlers()
     {OP_PUSH, push_disass},
     {OP_PUSHR, pushr_disass},
     {OP_POPR, popr_disass},
+    {OP_ADD, add_disass},
+    {OP_SUB, sub_disass},
+    {OP_MUL, mul_disass},
+    {OP_DIV, div_disass},
+    {OP_MOD, mod_disass},
+    {OP_AND, and_disass},
+    {OP_OR, or_disass},
+    {OP_XOR, xor_disass},
+    {OP_NOT, not_disass},
+    {OP_SHR, shr_disass},
+    {OP_SHL, shl_disass},
   };
 
   return handlers;
