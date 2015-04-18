@@ -36,7 +36,7 @@ static short read_short(std::istream& is)
   return value;
 }
 
-static unsigned read_byte(std::istream& is)
+static unsigned char read_byte(std::istream& is)
 {
   unsigned char c;
 
@@ -118,12 +118,12 @@ static void not_disass(std::istream& is, std::ostream& os)
 
 static void shr_disass(std::istream& is, std::ostream& os)
 {
-  os << "shr " << read_byte(is);
+  os << "shr " << (unsigned)read_byte(is);
 }
 
 static void shl_disass(std::istream& is, std::ostream& os)
 {
-  os << "shl " << read_byte(is);
+  os << "shl " << (unsigned)read_byte(is);
 }
 
 static void cmp_disass(std::istream& is, std::ostream& os)
