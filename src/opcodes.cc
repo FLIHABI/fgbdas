@@ -38,9 +38,9 @@ static short read_short(std::istream& is)
 
 static unsigned char read_byte(std::istream& is)
 {
-  unsigned char c;
+  char c;
 
-  if (!(is >> c))
+  if (!is.read(&c, 1))
     throw std::invalid_argument("Cannot read value, expected a 1 byte operand");
 
   return c;

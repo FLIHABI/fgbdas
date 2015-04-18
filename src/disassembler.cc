@@ -5,9 +5,9 @@
 
 void disassemble(std::istream& is, std::ostream& os)
 {
-  unsigned char op;
+  char op;
 
-  while ((is >> op))
+  while (is.read(&op, 1))
   {
     try
     {
