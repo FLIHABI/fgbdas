@@ -193,7 +193,10 @@ static void delete_disass(std::istream& is, std::ostream& os)
 
 static void setr_disass(std::istream& is, std::ostream& os)
 {
-  os << "setr " << read_short(is) << " " << read_long(is);
+  short reg = read_short(is);
+  long long value = read_long(is);
+
+  os << "setr " << reg << " " << value;
 }
 
 static std::unordered_map<unsigned char, opcode_handler_type>& get_handlers()
