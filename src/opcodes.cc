@@ -191,6 +191,11 @@ static void delete_disass(std::istream& is, std::ostream& os)
   os << "delete";
 }
 
+static void setr_disass(std::istream& is, std::ostream& os)
+{
+  os << "setr " << read_short(is) << " " << read_long(is);
+}
+
 static std::unordered_map<unsigned char, opcode_handler_type>& get_handlers()
 {
   static std::unordered_map<unsigned char, opcode_handler_type> handlers =
@@ -223,7 +228,8 @@ static std::unordered_map<unsigned char, opcode_handler_type>& get_handlers()
     {OP_JLE, jle_disass},
     {OP_JGE, jge_disass},
     {OP_CREATE, create_disass},
-    {OP_DELETE, delete_disass}
+    {OP_DELETE, delete_disass},
+    {OP_SETR, setr_disass}
   };
 
   return handlers;
