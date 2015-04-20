@@ -11,18 +11,22 @@ int main(int argc, char *argv[])
     return 1;
   }
 
-  std::ifstream input;
   if (argc == 2)
   {
-    input.open(argv[1]);
+    std::ifstream input(argv[1]);
 
     if (!input)
     {
       std::cerr << "Cannot open file: '" << argv[1] << "'" << std::endl;
       return 1;
     }
-  }
 
-  disassemble(argc == 2 ? input : std::cin, std::cout);
+    disassemble(input, std::cout);
+
+    input.close();
+  }
+  else
+    disassemble(std::cin, std::cout);
+
   return 0;
 }
