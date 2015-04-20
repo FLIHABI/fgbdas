@@ -231,8 +231,9 @@ static std::unordered_map<unsigned char, opcode_handler_type>& get_handlers()
 
 void handle_opcode(unsigned char op, std::istream& is, std::ostream& os)
 {
-  if (get_handlers().find(op) == get_handlers().end())
+  auto handler = get_handlers().find(op);
+  if (handler == get_handlers().end())
     throw std::invalid_argument("Bad opcode: " + std::to_string(op));
 
-  get_handlers().at(op)(is, os);
+  handler->second(is, os);
 }
