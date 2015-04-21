@@ -6,14 +6,14 @@
 
 typedef void (*opcode_handler_type)(std::istream&, std::ostream&);
 
-static long long read_long(std::istream& is)
+static int64_t read_64bits_operand(std::istream& is)
 {
   char buff[8] = {0};
 
   if (!is.read(buff, 8))
     throw std::invalid_argument("Cannot read value, expected an 8 byte operand");
 
-  long long value = 0;
+  int64_t value = 0;
 
   for (int i = 0; i < 8; ++i)
     value |= ((unsigned char)buff[i] << (8 * i));
@@ -21,14 +21,14 @@ static long long read_long(std::istream& is)
   return value;
 }
 
-static short read_short(std::istream& is)
+static int16_t read_16bits_operand(std::istream& is)
 {
   char buff[2] = {0};
 
   if (!is.read(buff, 2))
     throw std::invalid_argument("Cannot read value, expected a 2 byte operand");
 
-  short value = 0;
+  int16_t value = 0;
 
   for (int i = 0; i < 2; ++i)
     value |= ((unsigned char)buff[i] << (8 * i));
@@ -36,7 +36,7 @@ static short read_short(std::istream& is)
   return value;
 }
 
-static unsigned char read_byte(std::istream& is)
+static unsigned char read_8bits_operand(std::istream& is)
 {
   char c;
 
@@ -58,17 +58,17 @@ static void pop_disass(std::istream& is, std::ostream& os)
 
 static void push_disass(std::istream& is, std::ostream& os)
 {
-  os << "push " << read_long(is);
+  os << "push " << read_64bits_operand(is);
 }
 
 static void pushr_disass(std::istream& is, std::ostream& os)
 {
-  os << "pushr " << read_short(is);
+  os << "pushr " << read_16bits_operand(is);
 }
 
 static void popr_disass(std::istream& is, std::ostream& os)
 {
-  os << "popr " << read_short(is);
+  os << "popr " << read_16bits_operand(is);
 }
 
 static void add_disass(std::istream& is, std::ostream& os)
@@ -118,12 +118,12 @@ static void not_disass(std::istream& is, std::ostream& os)
 
 static void shr_disass(std::istream& is, std::ostream& os)
 {
-  os << "shr " << (unsigned)read_byte(is);
+  os << "shr " << (unsigned)read_8bits_operand(is);
 }
 
 static void shl_disass(std::istream& is, std::ostream& os)
 {
-  os << "shl " << (unsigned)read_byte(is);
+  os << "shl " << (unsigned)read_8bits_operand(is);
 }
 
 static void cmp_disass(std::istream& is, std::ostream& os)
@@ -133,12 +133,12 @@ static void cmp_disass(std::istream& is, std::ostream& os)
 
 static void call_disass(std::istream& is, std::ostream& os)
 {
-  os << "call " << read_short(is);
+  os << "call " << read_16bits_operand(is);
 }
 
 static void callr_disass(std::istream& is, std::ostream& os)
 {
-  os << "callr " << read_short(is);
+  os << "callr " << read_16bits_operand(is);
 }
 
 static void ret_disass(std::istream& is, std::ostream& os)
@@ -148,42 +148,42 @@ static void ret_disass(std::istream& is, std::ostream& os)
 
 static void jmp_disass(std::istream& is, std::ostream& os)
 {
-  os << "jmp " << read_short(is);
+  os << "jmp " << read_16bits_operand(is);
 }
 
 static void je_disass(std::istream& is, std::ostream& os)
 {
-  os << "je " << read_short(is);
+  os << "je " << read_16bits_operand(is);
 }
 
 static void jl_disass(std::istream& is, std::ostream& os)
 {
-  os << "jl " << read_short(is);
+  os << "jl " << read_16bits_operand(is);
 }
 
 static void jg_disass(std::istream& is, std::ostream& os)
 {
-  os << "jg " << read_short(is);
+  os << "jg " << read_16bits_operand(is);
 }
 
 static void jne_disass(std::istream& is, std::ostream& os)
 {
-  os << "jne " << read_short(is);
+  os << "jne " << read_16bits_operand(is);
 }
 
 static void jle_disass(std::istream& is, std::ostream& os)
 {
-  os << "jle " << read_short(is);
+  os << "jle " << read_16bits_operand(is);
 }
 
 static void jge_disass(std::istream& is, std::ostream& os)
 {
-  os << "jge " << read_short(is);
+  os << "jge " << read_16bits_operand(is);
 }
 
 static void create_disass(std::istream& is, std::ostream& os)
 {
-  os << "create " << read_short(is);
+  os << "create " << read_16bits_operand(is);
 }
 
 static void delete_disass(std::istream& is, std::ostream& os)
@@ -193,8 +193,8 @@ static void delete_disass(std::istream& is, std::ostream& os)
 
 static void setr_disass(std::istream& is, std::ostream& os)
 {
-  short reg = read_short(is);
-  long long value = read_long(is);
+  int16_t reg = read_16bits_operand(is);
+  int64_t value = read_64bits_operand(is);
 
   os << "setr " << reg << " " << value;
 }
