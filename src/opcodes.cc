@@ -183,12 +183,22 @@ static void jge_disass(const std::vector<char>& v, unsigned& i, std::ostream& os
 
 static void create_disass(const std::vector<char>& v, unsigned& i, std::ostream& os)
 {
-  os << "create " << read_16bits_operand(v, i);
+  os << "create";
 }
 
 static void delete_disass(const std::vector<char>& v, unsigned& i, std::ostream& os)
 {
   os << "delete";
+}
+
+static void read_disass(const std::vector<char>& v, unsigned& i, std::ostream& os)
+{
+  os << "read";
+}
+
+static void write_disass(const std::vector<char>& v, unsigned& i, std::ostream& os)
+{
+  os << "write";
 }
 
 static void setr_disass(const std::vector<char>& v, unsigned& i, std::ostream& os)
@@ -197,6 +207,16 @@ static void setr_disass(const std::vector<char>& v, unsigned& i, std::ostream& o
   int64_t value = read_64bits_operand(v, i);
 
   os << "setr " << reg << " " << value;
+}
+
+static void save_disass(const std::vector<char>& v, unsigned& i, std::ostream& os)
+{
+  os << "save " << read_16bits_operand(v, i);
+}
+
+static void restore_disass(const std::vector<char>& v, unsigned& i, std::ostream& os)
+{
+  os << "restore " << read_16bits_operand(v, i);
 }
 
 static std::unordered_map<unsigned char, opcode_handler_type>& get_handlers()
@@ -232,7 +252,11 @@ static std::unordered_map<unsigned char, opcode_handler_type>& get_handlers()
     {OP_JGE, jge_disass},
     {OP_CREATE, create_disass},
     {OP_DELETE, delete_disass},
-    {OP_SETR, setr_disass}
+    {OP_SETR, setr_disass},
+    {OP_SAVE, save_disass},
+    {OP_RESTORE, restore_disass},
+    {OP_READ, read_disass},
+    {OP_WRITE, write_disass}
   };
 
   return handlers;
