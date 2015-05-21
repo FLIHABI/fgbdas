@@ -2,7 +2,8 @@
 # define DISASSEMBLER_HH
 
 # include <fstream>
+# include <commons/tolkfile/tolk-file.hh>
 
-void disassemble(std::istream& is, std::ostream& os);
+void disassemble(std::shared_ptr<tolk::TolkFile>& file, std::ostream& os);
 
 #endif /* end of include guard: DISASSEMBLER_HH */

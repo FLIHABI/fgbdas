@@ -3,15 +3,13 @@
 #include "disassembler.hh"
 #include "opcodes.hh"
 
-void disassemble(std::istream& is, std::ostream& os)
+void disassemble(std::shared_ptr<tolk::TolkFile>& file, std::ostream& os)
 {
-  char op;
-
-  while (is.read(&op, 1))
+  for (unsigned i = 0; i < file->get_bytecode().size(); ++i)
   {
     try
     {
-      handle_opcode(op, is, os);
+      handle_opcode(file->get_bytecode(), i, os);
       os << std::endl;
     }
     catch(std::exception& e)

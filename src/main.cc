@@ -1,5 +1,5 @@
+#include <commons/tolkfile/tolk-file.hh>
 #include <iostream>
-#include <fstream>
 
 #include "disassembler.hh"
 
@@ -13,20 +13,10 @@ int main(int argc, char *argv[])
 
   if (argc == 2)
   {
-    std::ifstream input(argv[1]);
+    std::shared_ptr<tolk::TolkFile> ptr = tolk::TolkFile::load(argv[1]);
 
-    if (!input)
-    {
-      std::cerr << "Cannot open file: '" << argv[1] << "'" << std::endl;
-      return 1;
-    }
-
-    disassemble(input, std::cout);
-
-    input.close();
+    disassemble(ptr, std::cout);
   }
-  else
-    disassemble(std::cin, std::cout);
 
   return 0;
 }
