@@ -16,7 +16,7 @@ static int64_t read_64bits_operand(const std::vector<char>& vect, unsigned& inde
   int64_t value = 0;
 
   for (int i = 0; i < 8; ++i)
-    value |= ((unsigned char)vect[index + i] << (8 * i));
+    value |= ((unsigned char)vect[index + i + 1] << (8 * i));
 
   index += 8;
 
@@ -31,7 +31,7 @@ static int16_t read_16bits_operand(const std::vector<char>& vect, unsigned& inde
   int16_t value = 0;
 
   for (int i = 0; i < 2; ++i)
-    value |= ((unsigned char)vect[index + i] << (8 * i));
+    value |= ((unsigned char)vect[index + i + 1] << (8 * i));
 
   index += 2;
 
@@ -43,7 +43,7 @@ static unsigned char read_8bits_operand(const std::vector<char>& vect, unsigned&
   if (index + 1 >= vect.size())
     throw std::invalid_argument("Cannot read value, expected a 1 byte operand");
 
-  return vect[index++];
+  return vect[++index];
 }
 
 static void halt_disass(const std::vector<char>& v, unsigned& i, std::ostream& os)
