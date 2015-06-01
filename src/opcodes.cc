@@ -219,6 +219,11 @@ static void restore_disass(const std::vector<char>& v, unsigned& i, std::ostream
   os << "restore " << read_16bits_operand(v, i);
 }
 
+static void jmps_disass(const std::vector<char>& v, unsigned& i, std::ostream& os)
+{
+  os << "jmps";
+}
+
 static std::unordered_map<unsigned char, opcode_handler_type>& get_handlers()
 {
   static std::unordered_map<unsigned char, opcode_handler_type> handlers =
@@ -256,7 +261,8 @@ static std::unordered_map<unsigned char, opcode_handler_type>& get_handlers()
     {OP_SAVE, save_disass},
     {OP_RESTORE, restore_disass},
     {OP_READ, read_disass},
-    {OP_WRITE, write_disass}
+    {OP_WRITE, write_disass},
+    {OP_JMPS, jmps_disass}
   };
 
   return handlers;
